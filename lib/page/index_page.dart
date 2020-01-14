@@ -3,6 +3,7 @@ import 'package:flutter_jd/page/category/category.dart';
 import 'package:flutter_jd/page/home/home.dart';
 import 'package:flutter_jd/page/mine/my_page.dart';
 import 'package:flutter_jd/page/shop/shop_cart.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 750, height: 1334);
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,

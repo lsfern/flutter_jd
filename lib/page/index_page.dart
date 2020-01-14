@@ -11,7 +11,12 @@ class IndexPage extends StatefulWidget {
 
 class _IndexPageState extends State<IndexPage> {
   int _currentIndex = 0;
-  List<Widget> _pageList = [HomePage(), CategoryPage(), ShopCartPage(), MyPage()];
+  List<Widget> _pageList = [
+    HomePage(),
+    CategoryPage(),
+    ShopCartPage(),
+    MyPage()
+  ];
 
   @override
   Widget build(BuildContext context) {

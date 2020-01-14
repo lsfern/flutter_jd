@@ -4,7 +4,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Text('我的'),
+      child: Text('我的'),
     );
   }
 }

@@ -10,8 +10,6 @@ Handler rootHandler =
 
 Handler searchHandler =
     Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        String title = params['title']?.first;
-  return SearchPage(
-      title:title
-  );
+  String title = params['title']?.first;
+  return SearchPage(title: title);
 });

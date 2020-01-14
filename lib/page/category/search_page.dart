@@ -15,7 +15,7 @@ class SearchPage extends StatelessWidget {
         centerTitle: true,
         elevation: 2.0,
       ),
-      body:Center(
+      body: Center(
         child: InkWell(
           onTap: () {
             Routes.pop(context);

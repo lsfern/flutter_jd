@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_jd/model/home/shop_list_model.dart';
 import 'package:flutter_jd/model/home/swiper_model.dart';
+import 'package:flutter_jd/page/home/widget/hot_recommen.dart';
 import 'package:flutter_jd/page/home/widget/like_list.dart';
 import 'package:flutter_jd/page/home/widget/swpier.dart';
 import 'package:flutter_jd/utils/http_util.dart';
@@ -46,6 +47,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       bestList = ShopList.fromJson(response);
     });
+    print(bestList.result.length);
   }
 
   getHotData() async {
@@ -75,11 +77,11 @@ class _HomePageState extends State<HomePage> {
                 HomeSwiper(
                   swiperList: homeSwiperModel?.result ?? [],
                 ),
-                SizedBox(height: ScreenUtils.setWidth(30),),
+                SizedBox(height: ScreenUtils.setWidth(20),),
                 _shopContainer(),
-                LikeList(list: hotList.result,),
-                SizedBox(height: ScreenUtils.setWidth(10),),
+                LikeList(list: hotList?.result??[],),
                 _shopContainer(isHot: false),
+                HotRecommend(list: bestList?.result??[],)
               ],
             ),
           )),

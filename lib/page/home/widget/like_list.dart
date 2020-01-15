@@ -11,10 +11,8 @@ class LikeList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (list.length > 0) {
       return Container(
-        width: double.infinity,
-        height: 130,
-        margin: EdgeInsets.only(
-            top: ScreenUtils.setWidth(25), left: ScreenUtils.setWidth(20)),
+        height: ScreenUtils.setWidth(220),
+        padding: EdgeInsets.all(ScreenUtils.setWidth(20)),
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: list?.length ?? 0,
@@ -30,25 +28,28 @@ class LikeList extends StatelessWidget {
   }
 
   Widget listItem(int index) {
-    return Container(
-        padding: EdgeInsets.only(right: ScreenUtils.setWidth(10)),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 90,
-              child: Image.network(
-                "http://jd.itying.com/${list[index].pic.replaceAll('\\', '/')}",
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-                margin: EdgeInsets.only(top: ScreenUtils.setWidth(20)),
-                child: Text(
-                  list[index].title.substring(0, 4),
-                  style: TextStyle(
-                      fontSize: ScreenUtils.setSp(26), color: Colors.black54),
-                ))
-          ],
-        ));
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(right: ScreenUtils.setWidth(21)),
+          height: ScreenUtils.setWidth(140),
+          width: ScreenUtils.setWidth(140),
+          child: Image.network(
+            "http://jd.itying.com/${list[index].pic.replaceAll('\\', '/')}",
+            fit: BoxFit.cover,
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.only(top: ScreenUtils.setWidth(10)),
+            height: ScreenUtils.setWidth(40),
+            child: Text(
+              "¥${list[index].price}",
+//              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: ScreenUtils.setSp(26), color: Colors.black54),
+            ))
+      ],
+    );
   }
 }

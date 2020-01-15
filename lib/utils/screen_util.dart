@@ -18,11 +18,11 @@ class ScreenUtils {
 
   /// 获取屏幕宽度
   static double getScreenWidth() {
-    return ScreenUtil.screenWidth;
+    return ScreenUtil.screenWidthDp;
   }
 
   /// 获取屏幕高度
   static double getScreenHeight() {
-    return ScreenUtil.screenHeight;
+    return ScreenUtil.screenHeightDp;
   }
 }

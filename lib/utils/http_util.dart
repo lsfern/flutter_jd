@@ -28,6 +28,7 @@ class HttpUtils {
       if (response.statusCode >= 200 && response.statusCode <= 400) {
         return response.data;
       }
+      throw Exception(response);
     } on DioError catch (e) {
       if (e.response != null) {
         print(e.response.data);

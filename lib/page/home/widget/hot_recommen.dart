@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jd/common/config.dart';
 import 'package:flutter_jd/model/home/shop_list_model.dart';
 import 'package:flutter_jd/utils/screen_util.dart';
 
@@ -50,7 +51,7 @@ class HotRecommend extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1 / 1,
         child: Image.network(
-          "http://jd.itying.com/${item.pic.replaceAll('\\', '/')}",
+          Config.baseUrl + item.pic.replaceAll('\\', '/'),
           fit: BoxFit.cover,
         ),
       ),

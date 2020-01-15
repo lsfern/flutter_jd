@@ -15,7 +15,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   SwiperModel homeSwiperModel;
 
   // 猜你喜欢
@@ -77,11 +78,17 @@ class _HomePageState extends State<HomePage> {
                 HomeSwiper(
                   swiperList: homeSwiperModel?.result ?? [],
                 ),
-                SizedBox(height: ScreenUtils.setWidth(20),),
+                SizedBox(
+                  height: ScreenUtils.setWidth(20),
+                ),
                 _shopContainer(),
-                LikeList(list: hotList?.result??[],),
+                LikeList(
+                  list: hotList?.result ?? [],
+                ),
                 _shopContainer(isHot: false),
-                HotRecommend(list: bestList?.result??[],)
+                HotRecommend(
+                  list: bestList?.result ?? [],
+                )
               ],
             ),
           )),
@@ -101,10 +108,15 @@ class _HomePageState extends State<HomePage> {
                     width: ScreenUtils.setWidth(10), color: Colors.red))),
         child: Text(
           '${isHot ? '猜你喜欢' : '热门推荐'}',
-          style:
-              TextStyle(fontSize: ScreenUtils.setSp(27), color: Colors.red,fontWeight: FontWeight.w800),
+          style: TextStyle(
+              fontSize: ScreenUtils.setSp(27),
+              color: Colors.red,
+              fontWeight: FontWeight.w800),
         ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

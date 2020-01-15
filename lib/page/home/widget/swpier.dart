@@ -1,5 +1,6 @@
 /// 首页Swiper组件
 import 'package:flutter/material.dart';
+import 'package:flutter_jd/common/config.dart';
 import 'package:flutter_jd/model/home/swiper_model.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -17,7 +18,7 @@ class HomeSwiper extends StatelessWidget {
           child: Swiper(
             itemBuilder: (BuildContext context, int index) {
               return Image.network(
-                "http://jd.itying.com/${swiperList[index].pic.replaceAll('\\', '/')}",
+                Config.baseUrl + swiperList[index].pic.replaceAll('\\', '/'),
                 fit: BoxFit.cover,
               );
             },

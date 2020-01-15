@@ -21,6 +21,9 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    PageController controller = PageController(
+      initialPage: 0,
+    );
     ScreenUtil.init(context, width: 750, height: 1334);
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
@@ -28,6 +31,7 @@ class _IndexPageState extends State<IndexPage> {
           onTap: (index) {
             setState(() {
               _currentIndex = index;
+              controller.jumpToPage(_currentIndex);
             });
           },
           fixedColor: Colors.red,
@@ -42,6 +46,15 @@ class _IndexPageState extends State<IndexPage> {
                 title: Text('我的'), icon: Icon(Icons.people)),
           ],
         ),
-        body: _pageList[_currentIndex]);
+        body: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          onPageChanged: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          controller: controller,
+          children: _pageList,
+        ));
   }
 }

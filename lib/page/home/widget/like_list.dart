@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jd/common/config.dart';
 import 'package:flutter_jd/model/home/shop_list_model.dart';
 import 'package:flutter_jd/utils/screen_util.dart';
 
@@ -35,7 +36,7 @@ class LikeList extends StatelessWidget {
           height: ScreenUtils.setWidth(140),
           width: ScreenUtils.setWidth(140),
           child: Image.network(
-            "http://jd.itying.com/${list[index].pic.replaceAll('\\', '/')}",
+            Config.baseUrl + list[index].pic.replaceAll('\\', '/'),
             fit: BoxFit.cover,
           ),
         ),

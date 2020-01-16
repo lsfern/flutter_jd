@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_jd/model/home/shop_list_model.dart';
 import 'package:flutter_jd/model/home/swiper_model.dart';
@@ -8,7 +6,7 @@ import 'package:flutter_jd/page/home/widget/like_list.dart';
 import 'package:flutter_jd/page/home/widget/swpier.dart';
 import 'package:flutter_jd/utils/http_util.dart';
 import 'package:flutter_jd/utils/screen_util.dart';
-import 'package:flutter_jd/widget/cache_image.dart';
+import 'package:flutter_jd/widget/loading.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,9 +26,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    getSwiperData();
-    geBestData();
-    getHotData();
+    getAllData();
   }
 
   getSwiperData() async {
@@ -48,7 +44,6 @@ class _HomePageState extends State<HomePage>
     setState(() {
       bestList = ShopList.fromJson(response);
     });
-    print(bestList.result.length);
   }
 
   getHotData() async {
@@ -60,39 +55,54 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  Future<void> getAllData() async {
+    await getSwiperData();
+    await geBestData();
+    await getHotData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('首页'),
-        elevation: 2.0,
-        centerTitle: true,
-      ),
-      body: MediaQuery.removePadding(
-          removeTop: true,
-          context: context,
-          child: Container(
-            color: Colors.white,
-            child: ListView(
-              children: <Widget>[
-                HomeSwiper(
-                  swiperList: homeSwiperModel?.result ?? [],
-                ),
-                SizedBox(
-                  height: ScreenUtils.setWidth(20),
-                ),
-                _shopContainer(),
-                LikeList(
-                  list: hotList?.result ?? [],
-                ),
-                _shopContainer(isHot: false),
-                HotRecommend(
-                  list: bestList?.result ?? [],
-                )
-              ],
-            ),
-          )),
-    );
+        appBar: AppBar(
+          title: Text('首页'),
+          elevation: 2.0,
+          centerTitle: true,
+        ),
+        body: _setMainContent());
+  }
+
+  _setMainContent() {
+    if (bestList?.result?.length != 0) {
+      return RefreshIndicator(
+        onRefresh: getAllData,
+        child: MediaQuery.removePadding(
+            removeTop: true,
+            context: context,
+            child: Container(
+              color: Colors.white,
+              child: ListView(
+                children: <Widget>[
+                  HomeSwiper(
+                    swiperList: homeSwiperModel?.result ?? [],
+                  ),
+                  SizedBox(
+                    height: ScreenUtils.setWidth(20),
+                  ),
+                  _shopContainer(),
+                  LikeList(
+                    list: hotList?.result ?? [],
+                  ),
+                  _shopContainer(isHot: false),
+                  HotRecommend(
+                    list: bestList?.result ?? [],
+                  )
+                ],
+              ),
+            )),
+      );
+    }
+    return Loading();
   }
 
   Widget _shopContainer({bool isHot = true}) {

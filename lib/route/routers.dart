@@ -6,6 +6,7 @@ class Routes {
   static Router router;
   static String root = '/';
   static String search = '/search';
+  static String shopList = '/shopList';
 
   // 配置route
   static void configureRoutes(Router router) {
@@ -20,6 +21,7 @@ class Routes {
 
     router.define(root, handler: rootHandler); // 根目录
     router.define(search, handler: searchHandler); // 测试搜索
+    router.define(shopList, handler: shopListHandler); // 商品列表
   }
 
   // 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

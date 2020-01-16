@@ -24,7 +24,7 @@ class LikeList extends StatelessWidget {
     }
     return Align(
       alignment: Alignment.topCenter,
-      child: Text('加载中...'),
+      child: Text(''),
     );
   }
 
@@ -45,7 +45,7 @@ class LikeList extends StatelessWidget {
             height: ScreenUtils.setWidth(40),
             child: Text(
               "¥${list[index].price}",
-//              maxLines: 2,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: ScreenUtils.setSp(26), color: Colors.black54),

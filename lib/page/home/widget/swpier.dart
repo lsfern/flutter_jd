@@ -31,7 +31,7 @@ class HomeSwiper extends StatelessWidget {
     } else {
       return Align(
         alignment: Alignment.topCenter,
-        child: Text('加载中...'),
+        child: Text(''),
       );
     }
   }

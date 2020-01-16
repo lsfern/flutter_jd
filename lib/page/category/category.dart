@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jd/common/config.dart';
 import 'package:flutter_jd/model/category/category_model.dart';
-import 'package:flutter_jd/model/category/category_model.dart' as prefix0;
+import 'package:flutter_jd/route/routers.dart';
 import 'package:flutter_jd/utils/http_util.dart';
 import 'package:flutter_jd/utils/screen_util.dart';
 
@@ -89,7 +89,7 @@ class _CategoryPageState extends State<CategoryPage>
                       mainAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
-                      return _rightView(index);
+                      return _rightView(context, index);
                     }),
               )),
         ],
@@ -127,22 +127,29 @@ class _CategoryPageState extends State<CategoryPage>
     );
   }
 
-  Widget _rightView(int index) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Image.network(
-              Config.baseUrl + shop[index].pic.replaceAll('\\', '/'),
-              fit: BoxFit.cover,
+  Widget _rightView(BuildContext context, int index) {
+    return InkWell(
+      onTap: () {
+        Routes.navigateTo(context, Routes.shopList,
+            params: {'id': shop[index].sId, 'title': shop[index].title});
+      },
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 1 / 1,
+              child: Image.network(
+                Config.baseUrl + shop[index].pic.replaceAll('\\', '/'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Container(
-            height: ScreenUtils.setHeight(28),
-            child: Text("${shop[index].title}"),
-          )
-        ],
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtils.setWidth(10)),
+              height: ScreenUtils.setHeight(28),
+              child: Text("${shop[index].title}"),
+            )
+          ],
+        ),
       ),
     );
   }

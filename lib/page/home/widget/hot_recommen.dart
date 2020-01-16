@@ -22,7 +22,7 @@ class HotRecommend extends StatelessWidget {
     }
     return Align(
       alignment: Alignment.topCenter,
-      child: Text('加载中...'),
+      child: Text(''),
     );
   }
 

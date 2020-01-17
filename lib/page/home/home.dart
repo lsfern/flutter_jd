@@ -63,13 +63,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('首页'),
-          elevation: 2.0,
-          centerTitle: true,
-        ),
-        body: _setMainContent());
+    return _setMainContent();
   }
 
   _setMainContent() {

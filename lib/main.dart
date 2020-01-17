@@ -14,8 +14,9 @@ class JdApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: '京东',
-        theme: ThemeData(primaryColor: Colors.red),
+        theme: ThemeData(primaryColor: Colors.white),
         onGenerateRoute: Routes.router.generator,
         home: IndexPage());
   }

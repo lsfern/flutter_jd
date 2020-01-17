@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jd/common/config.dart';
 import 'package:flutter_jd/model/home/shop_list_model.dart';
+import 'package:flutter_jd/utils/common_util.dart';
 import 'package:flutter_jd/utils/http_util.dart';
 import 'package:flutter_jd/utils/screen_util.dart';
 import 'package:flutter_jd/widget/loading.dart';
 
 class ShopListPage extends StatefulWidget {
-  final String id;
-  final String title;
+  final Map params;
 
-  const ShopListPage({Key key, @required this.id, @required this.title})
-      : super(key: key);
+  const ShopListPage({Key key, this.params}) : super(key: key);
 
   @override
   _ShopListPageState createState() => _ShopListPageState();
@@ -55,9 +54,14 @@ class _ShopListPageState extends State<ShopListPage> {
 
   // 排序:价格升序 sort=price_1 价格降序 sort=price_-1  销量升序 sort=salecount_1 销量降序 sort=salecount_-1
   String _sort = "";
+
+  TextEditingController _textEditingController = TextEditingController();
+  FocusNode focusNode
   @override
   void initState() {
     super.initState();
+    focusNode =FocusNode();
+    _textEditingController.text = widget.params['keywords']?.first;
     _getShopList();
     _controller.addListener(() {
       if (_controller.position.pixels >
@@ -68,6 +72,14 @@ class _ShopListPageState extends State<ShopListPage> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    focusNode.dispose();
+    _textEditingController.dispose();
+    _controller.dispose();
   }
 
   Future<void> _getShopList({bool isLoadMore = false}) async {
@@ -85,12 +97,18 @@ class _ShopListPageState extends State<ShopListPage> {
         shopList = [];
         _hasMore = true;
       }
+      var type = "";
+      if (_textEditingController.text != null) {
+        type = "search=${_textEditingController.text}";
+      }
+      if (widget.params['id']?.first != null) {
+        type = "cid=${widget.params['id']?.first}";
+      }
       var response = await HttpUtils.sendRequest(
-          '/plist?cid=${widget.id}&sort=$_sort&page=$_pageIndex&pageSize=$_pageSize',
+          '/plist?$type&sort=$_sort&page=$_pageIndex&pageSize=$_pageSize',
           params: null,
           way: RequestWay.get);
       List<ShopListItem> list = ShopList.fromJson(response).result;
-      print(list.length);
       if (list.length < _pageSize) {
         setState(() {
           shopList.addAll(list);
@@ -115,12 +133,26 @@ class _ShopListPageState extends State<ShopListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _globalKey,
       appBar: AppBar(
-        title: Text(widget.title),
-        elevation: 1.0,
-        centerTitle: true,
-        actions: <Widget>[Text("")],
+        title: _titleContainer(),
+        actions: <Widget>[
+          InkWell(
+            onTap: () {
+              CommonUtil.hideKeyboard(context);
+              _onTabClick(1);
+            },
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(right: ScreenUtils.setWidth(20)),
+                  child: Text('搜索'),
+                )
+              ],
+            ),
+          )
+        ],
       ),
       endDrawer: Drawer(
           child: Container(
@@ -133,6 +165,29 @@ class _ShopListPageState extends State<ShopListPage> {
               children: <Widget>[_listView(), _positionView()],
             ),
           )),
+    );
+  }
+
+  /// 标题栏
+  Widget _titleContainer() {
+    return Container(
+      height: ScreenUtils.setHeight(60),
+      decoration: BoxDecoration(
+          color: Color.fromRGBO(233, 233, 233, 0.8),
+          borderRadius: BorderRadius.circular(30)),
+      child: TextField(
+        controller: _textEditingController,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide.none)),
+        onChanged: (value) {
+          setState(() {
+            _textEditingController.text = value;
+          });
+        },
+      ),
     );
   }
 

@@ -56,45 +56,38 @@ class _CategoryPageState extends State<CategoryPage>
     //获取计算后的高度
     var rightItemHeight = rightItemWidth + ScreenUtils.setHeight(28);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('分类'),
-        elevation: 1.0,
-        centerTitle: true,
-      ),
-      body: Container(
-          child: Row(
-        children: <Widget>[
-          Container(
-            width: leftWidth,
-            height: double.infinity,
-            color: Colors.white,
-            child: ListView.builder(
-                itemCount: category?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return _leftView(index);
-                }),
-          ),
-          Expanded(
-              flex: 1,
-              child: Container(
-                padding: EdgeInsets.all(ScreenUtils.setWidth(10)),
-                color: Color.fromRGBO(240, 246, 246, 0.9),
-                child: GridView.builder(
-                    itemCount: shop?.length ?? 0,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: rightItemWidth / rightItemHeight,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemBuilder: (context, index) {
-                      return _rightView(context, index);
-                    }),
-              )),
-        ],
-      )),
-    );
+    return Container(
+        child: Row(
+      children: <Widget>[
+        Container(
+          width: leftWidth,
+          height: double.infinity,
+          color: Colors.white,
+          child: ListView.builder(
+              itemCount: category?.length ?? 0,
+              itemBuilder: (context, index) {
+                return _leftView(index);
+              }),
+        ),
+        Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all(ScreenUtils.setWidth(10)),
+              color: Color.fromRGBO(240, 246, 246, 0.9),
+              child: GridView.builder(
+                  itemCount: shop?.length ?? 0,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: rightItemWidth / rightItemHeight,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    return _rightView(context, index);
+                  }),
+            )),
+      ],
+    ));
   }
 
   Widget _leftView(int index) {
@@ -130,8 +123,11 @@ class _CategoryPageState extends State<CategoryPage>
   Widget _rightView(BuildContext context, int index) {
     return InkWell(
       onTap: () {
+        Map<String,dynamic> map = {
+          'id': shop[index].sId
+        };
         Routes.navigateTo(context, Routes.shopList,
-            params: {'id': shop[index].sId, 'title': shop[index].title});
+            params: map);
       },
       child: Container(
         child: Column(

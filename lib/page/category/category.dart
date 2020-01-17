@@ -124,7 +124,8 @@ class _CategoryPageState extends State<CategoryPage>
     return InkWell(
       onTap: () {
         Map<String,dynamic> map = {
-          'id': shop[index].sId
+          'id': shop[index].sId,
+          'title':shop[index].title
         };
         Routes.navigateTo(context, Routes.shopList,
             params: map);

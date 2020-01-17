@@ -62,6 +62,7 @@ class _ShopListPageState extends State<ShopListPage> {
     super.initState();
     focusNode = FocusNode();
     _textEditingController.text = widget.params['keywords']?.first;
+    _textEditingController.text = widget.params['title']?.first;
     _getShopList();
     _controller.addListener(() {
       if (_controller.position.pixels >
@@ -175,19 +176,22 @@ class _ShopListPageState extends State<ShopListPage> {
       decoration: BoxDecoration(
           color: Color.fromRGBO(233, 233, 233, 0.8),
           borderRadius: BorderRadius.circular(30)),
-      child: TextField(
-        controller: _textEditingController,
-        focusNode: focusNode,
-        decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide.none)),
-        onChanged: (value) {
-          setState(() {
-            _textEditingController.text = value;
-          });
-        },
-      ),
+      child: Align(
+        alignment: Alignment.center,
+        child: TextField(
+          controller: _textEditingController,
+          focusNode: focusNode,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none)),
+          onChanged: (value) {
+            setState(() {
+              _textEditingController.text = value;
+            });
+          },
+        ),
+      )
     );
   }
 

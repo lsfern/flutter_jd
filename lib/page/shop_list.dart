@@ -56,11 +56,11 @@ class _ShopListPageState extends State<ShopListPage> {
   String _sort = "";
 
   TextEditingController _textEditingController = TextEditingController();
-  FocusNode focusNode
+  FocusNode focusNode;
   @override
   void initState() {
     super.initState();
-    focusNode =FocusNode();
+    focusNode = FocusNode();
     _textEditingController.text = widget.params['keywords']?.first;
     _getShopList();
     _controller.addListener(() {
